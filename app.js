@@ -1,14 +1,57 @@
+// var btnTranslate = document.querySelector("#btn-translate");
+// var txtinput = document.querySelector("#txt-input");
+// var outputdiv = document.querySelector("#output");
+
+// // outputdiv.innerText = "saini";
+
+// btnTranslate.addEventListener("click",function clickEventHandler(){
+//     outputdiv.innerText = "Hello " + txtinput.value;
+
+//     // console.log("Clicked");
+//     // console.log("input" , txtinput.value)
+//     // var name = prompt("Your Name :");
+//     // alert("Great You are " + name);
+//     // open("https://punjab.chitkara.edu.in//Interface/Student/index.php")
+// })
+
+// // var textarea = document.querySelector("#txt-input");
+
+// // console.log(textarea)
+
+// // var btnprimary = document.querySelector("btn-translate");
+
+// // console.log(btnprimary)
+
 var btnTranslate = document.querySelector("#btn-translate");
-var txtinput = document.querySelector("#txt-input");
+var txtInput = document.querySelector("#txt-input");
+var outputDiv = document.querySelector("#output");
 
-btnTranslate.addEventListener("click",function clickEventHandler(){
+// var serverURL = "https://lessonfourapi.tanaypratap.repl.co/translate/yoda.json"
 
-    console.log("Clicked");
-    console.log("input" , txtinput.value)
-    // var name = prompt("Your Name :");
-    // alert("Great You are " + name);
-    // open("https://punjab.chitkara.edu.in//Interface/Student/index.php")
-})
+var serverURL = "https://api.funtranslations.com/translate/minion.json"
 
 
+function getTranslationURL(input) {
+    return serverURL + "?" + "text=" + input
+}
 
+function errorHandler(error) {
+    console.log("error occured", error);
+    alert("something wrong with server! try again after some time")
+}
+
+
+function clickHandler() {
+    var inputText = txtInput.value; // taking input
+
+    // calling server for processing
+    fetch(getTranslationURL(inputText))
+        .then(response => response.json())
+        .then(json => {
+            var translatedText = json.contents.translated;
+            outputDiv.innerText = translatedText; // output
+           })
+        .catch(errorHandler)
+};
+
+btnTranslate.addEventListener("click", clickHandler)
